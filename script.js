@@ -1,15 +1,24 @@
 $(document).ready(function(){
-    $("#currentDay").text(moment().format("MMM Do YY"));
+    $("#currentDay").text(moment().format("MMMM Do YYYY, h:mm:ss a"));
 })
-function myFunction1() {
-    /* Get the text field */
-    var copyText = document.getElementById("myInput1");
-    /* Select the text field */
-    copyText.select();
-    copyText.setSelectionRange(0, 99999); /*For mobile devices*/
-    /* Copy the text inside the text field */
-    document.execCommand("copy");
- 
-    /* Alert the copied text */
-    alert("Copied the text: " + copyText.value);
-}  
+
+function updateTime(){
+    $("#currentDay").text(moment().format("MMMM Do YYYY, h:mm:ss a"));
+}
+function renderEvents(){
+    $("textarea").each(function(){
+        var eventTime = $(this).siblings("div.hour").text();
+        $(this).text(window.localStorage.getItem(eventTime));
+    })
+}
+$(document).ready(function(){
+    updateTime();
+    setInterval(updateTime, 1000);
+    renderEvents()
+
+    $(".saveBtn").on("click",function(){
+        var testing = $(this).siblings("div.hour").text()
+        window.localStorage.setItem(testing,$(this).siblings("textarea").val());
+
+    })
+})
