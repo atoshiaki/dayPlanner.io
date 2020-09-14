@@ -12,9 +12,10 @@ function renderEvents(){
     })
 
     $(".row").each(function(){
-        var eventTime = $(this).children("div.hour").text()
-        var roundTime = moment().startOf('hour').format("hh a");
-
+        var eventTime = moment($(this).children("div.hour").text(), "hh a")
+        console.log(eventTime)
+        var roundTime = moment().startOf('hour');
+        console.log(roundTime)
         if (roundTime<eventTime) {
             $(this).children("textarea").addClass("future")
             console.log()
@@ -25,7 +26,7 @@ function renderEvents(){
             console.log()
         }
 
-        else if (roundTime===eventTime) {
+        else {
             $(this).children("textarea").addClass("present")
             console.log()
         }     
